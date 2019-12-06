@@ -1,13 +1,12 @@
-#Simple RPG/Pokemon type game
+#Simple RPG type game
 
 ###############
 ## Variables ##
 ###############
 
 WIDTH = 800
-HEIGHT = 800 #Window size
-player_x = 600
-player_y = 350
+Height = 450 #Window size
+ScreenState = 0
 
 BLACK = (0, 0, 0)
 BLUE = (0, 155, 255)
@@ -17,20 +16,19 @@ GREEN = (0, 255, 0)
 RED = (128, 0, 0)
 
 def draw():
-    screen.blit(pixil-frame-0,(0,0))
+    if ScreenState == 0:
+        screen.blit(images.splashscreen,(0,75))
+    elif ScreenState == 1:
+        screen.blit(images.mainscreen,(0,75))
+
+def on_mouse_down(pos):
+    global ScreenState
+    if pos[0] < 800 and pos[0] > 0 and pos[1] < 450 and pos[1] > 0:
+        ScreenState = 1
 
 def game_loop():
     #enter stuff
-    global player_x, player_y
-    if keyboard.right:
-        player_x += 5
-    elif keyboard.left:
-        player_x -= 5
-    elif keyboard.up:
-        player_y -= 5
-    elif keyboard.down:
-        player_y += 5
-    
+    global ScreenState
 
 clock.schedule_interval(game_loop, 0.03)
 
