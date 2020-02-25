@@ -18,12 +18,14 @@ intelligence = ""
 charisma = ""
 dexterity = ""
 EXP = "0"
+HP = ""
+location = "Barracks"
 
 #Function Defs
 #Create a new character
 def createCharacter():
     #Player Character values
-    global characterName, characterClass, strength, intelligence, charisma, dexterity, EXP
+    global characterName, characterClass, strength, intelligence, charisma, dexterity, EXP, HP
     pointSum = 0
 
     #Pick class and assign base stats
@@ -35,18 +37,21 @@ def createCharacter():
             intelligence = "1"
             charisma = "3"
             dexterity = "2"
+            HP = "4"
         elif input == "2":
             characterClass = "Smuggler"
             strength = "2"
             intelligence = "3"
             charisma = "4"
             dexterity = "1"
+            HP = "4"
         elif input == "3":
             characterClass = "Technician"
             strength = "2"
             intelligence = "4"
             charisma = "1"
             dexterity = "3"
+            HP = "4"
         else:
             print("Select a valid option")
     
@@ -111,11 +116,12 @@ def createCharacter():
     f.write("Charisma: " + charisma + "\n")
     f.write("Dexterity: " + dexterity + "\n")
     f.write("EXP: " + EXP)
+    f.write("HP: " + HP)
     f.close()
     
 #Load previously made character
 def loadCharacter():
-    global characterName, characterClass, strength, intelligence, charisma, dexterity, EXP
+    global characterName, characterClass, strength, intelligence, charisma, dexterity, EXP, HP
     f = open("player", "r")
     characterName = f.readline()
     characterClass = f.readline()
@@ -123,11 +129,12 @@ def loadCharacter():
     intelligence = f.readline()[-2:]
     charisma = f.readline()[-2:]
     dexterity = f.readline()[-2:]
+    HP = f.readline()[-2:]
     f.close()
 
 #Functions to get and set attributes
 def getAttribute(attribute):
-    global characterName, characterClass, strength, intelligence, charisma, dexterity, EXP
+    global characterName, characterClass, strength, intelligence, charisma, dexterity, EXP, HP
     if attribute == "name":
         return characterName
     elif attribute == "class":
@@ -146,7 +153,7 @@ def getAttribute(attribute):
         return " "
 
 def levelUp():
-    global characterName, characterClass, strength, intelligence, charisma, dexterity, EXP
+    global characterName, characterClass, strength, intelligence, charisma, dexterity, EXP, HP
     print("Level Up")
     pointsAdded = 0
     while(pointsAdded != 3):
@@ -203,3 +210,32 @@ def splashScreen():
             loadCharacter()
         else:
             print("Invalid Entry")
+
+def menu():
+    global location
+    print(Dialogue.dialogueLibrary("currentlocation") + location + "\n")
+    Dialogue.dialogueLibrary(location)
+    if location == "Barracks":
+        for x in Dialogue.dialogueLibrary("Barracks"):
+            print(x + "\n")
+    elif location == "Training Grounds":
+        for x in Dialogue.dialogueLibrary("Training Grounds"):
+            print(x + "\n")
+    elif location == "Mission":
+        for x in Dialogue.dialogueLibrary("Mission"):
+            print(x + "\n")
+
+def chooseLocation():
+    global location
+    print(Dialogue.dialogueLibrary("menu"))
+    choice = input()
+    if choice == "1":
+        location = Dialogue.locationLibrary("1")
+    elif choice == "2":
+        location = Dialogue.locationLibrary("2")
+    elif choice == "3":
+        location = Dialogue.locationLibrary("3")
+    else:
+        print("Invalid choice")
+        choice = ""
+    print(Dialogue.dialogueLibrary("currentlocation") + location + "\n")
