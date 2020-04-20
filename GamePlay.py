@@ -6,22 +6,20 @@
 ###############
 #import Dialogue
 import GameFunctions
+import CharacterClass
 
 ###############
 ## Variables ##
 ###############
 gameOver = 0
+player   = CharacterClass.Character()
 
 #Initialize game parameters
-GameFunctions.splashScreen()
-print("Name: " + GameFunctions.getAttribute("name") + " Class: " + GameFunctions.getAttribute("class") + " Strength: "
-      + GameFunctions.getAttribute("strength") + " Intelligence: " + GameFunctions.getAttribute("intelligence") + " Charisma: "
-      + GameFunctions.getAttribute("charisma") + " Dexterity: " + GameFunctions.getAttribute("dexterity"))
-            
+GameFunctions.splashScreen(player)
+         
 while(not gameOver):
     #Main game loop code
     GameFunctions.menu()
-
     print("Continue?: y or n")
     cont = input()
     if cont == "y":
