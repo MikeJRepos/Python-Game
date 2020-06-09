@@ -19,7 +19,7 @@ GameFunctions.splashScreen(player)
          
 while(not gameOver):
     #Main game loop code
-    GameFunctions.menu()
+    GameFunctions.menu(player)
     print("Continue?: y or n")
     cont = input()
     if cont == "y":

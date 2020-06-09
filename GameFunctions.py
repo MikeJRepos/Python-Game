@@ -3,19 +3,19 @@
 ###############
 ### Imports ###
 ###############
-import Dialogue
+import GameLibraries
 import random
+import LocationFunctions
 ###############
 ## Variables ##
 ###############
 
 stop = 0
 validEntry = 0
-location = "Barracks"
 
 #Function Defs  
 def splashScreen(player):
-    print(Dialogue.dialogueLibrary("welcome"));
+    print(GameLibraries.dialogueLibrary("welcome"));
     while True:
         print("\t Enter 1 for new game or 2 to continue")
         start = input()
@@ -72,30 +72,30 @@ def splashScreen(player):
                     player.setName(Name)
                     break   
                    
-            while (pointSum != 5):
-                #User distributes skill points
-                print("Distribute your 5 points")
+            #User distributes skill points
+            print("Distribute your 5 points")
+            pointsAdded = 0
             while(pointsAdded != 5):
                 print("Choose where to put a point: \n"
                       "1: Strength \n"
                       "2: Intelligence \n"
                       "3: Charisma \n"
                       "4: Dexterity \n")
-            choice = input()
-            if choice == "1":
-                player.setStrength(player.getStrength() + 1)
-                pointsAdded += 1
-            elif choice == "2":
-                player.setInt(player.getInt() + 1)
-                pointsAdded += 1
-            elif choice == "3":
-                player.setCha(player.getCha() + 1)
-                pointsAdded += 1
-            elif choice == "4":
-                player.setDex(player.getDex() + 1)
-                pointsAdded += 1
-            else:
-                print("Invalid Selection")
+                choice = input()
+                if choice == "1":
+                    player.setStrength(player.getStrength() + 1)
+                    pointsAdded += 1
+                elif choice == "2":
+                    player.setInt(player.getInt() + 1)
+                    pointsAdded += 1
+                elif choice == "3":
+                    player.setCha(player.getCha() + 1)
+                    pointsAdded += 1
+                elif choice == "4":
+                    player.setDex(player.getDex() + 1)
+                    pointsAdded += 1
+                else:
+                    print("Invalid Selection")
 
             print("Name: " + player.getName())
             print("Class: " + player.getClass())
@@ -105,9 +105,9 @@ def splashScreen(player):
             print("Dexterity: %s" % (player.getDex()))
             print("Experience: %s" % (player.getExp()))
             print("HP: %s" % (player.getHP()))
-            print("Weapon1: " % (player.getW1()))
-            print("Weapon2: " % (player.getW2()))
-            print("Armor: " % (player.getArmor()))
+            print("Weapon1: %s" % (player.getWeapon1()))
+            print("Weapon2: %s" % (player.getWeapon2()))
+            print("Armor: %s" % (player.getArmor()))
 
             #End character creation
             player.save()
@@ -125,21 +125,21 @@ def splashScreen(player):
             player.setExp(int(f.readline()[-2:]))
             player.setHP(int(f.readline()[-2:]))
             player.setWeapon1(f.readline())
-            player.setWaepon2(f.readline())
+            player.setWeapon2(f.readline())
             player.setArmor(f.readline())
             f.close()
 
-            print("Name: " + player.getName())
-            print("Class: " + player.getClass())
+            print("Name: " + player.getName(),end="")
+            print("Class: " + player.getClass(),end="")
             print("Strength: %s" % (player.getStrength()))
             print("Intelligence: %s" % (player.getInt()))
             print("Charisma: %s" % (player.getCha()))
             print("Dexterity: %s" % (player.getDex()))
             print("Experience: %s" % (player.getExp()))
             print("HP: %s" % (player.getHP()))
-            print("Weapon1: " % (player.getW1()))
-            print("Weapon2: " % (player.getW2()))
-            print("Armor: " % (player.getArmor()))
+            print("Weapon1: %s" % (player.getWeapon1()),end="")
+            print("Weapon2: %s" % (player.getWeapon2()),end="")
+            print("Armor: %s" % (player.getArmor()))
             return 0
             
         else:
@@ -177,31 +177,49 @@ def levelUp(player):
     player.save()
         
     
-def menu():
-    global location
-    print(Dialogue.dialogueLibrary("currentlocation") + location + "\n")
-    Dialogue.dialogueLibrary(location)
+def menu(player):
+    location = player.getLocation()
+    print(GameLibraries.dialogueLibrary("currentlocation") + location + "\n")
+    GameLibraries.dialogueLibrary(location)
     if location == "Barracks":
-        for x in Dialogue.dialogueLibrary("Barracks"):
+        for x in GameLibraries.dialogueLibrary("Barracks"):
             print(x + "\n")
     elif location == "Training Grounds":
-        for x in Dialogue.dialogueLibrary("Training Grounds"):
+        for x in GameLibraries.dialogueLibrary("Training Grounds"):
             print(x + "\n")
     elif location == "Mission":
-        for x in Dialogue.dialogueLibrary("Mission"):
+        for x in GameLibraries.dialogueLibrary("Mission"):
             print(x + "\n")
 
-def chooseLocation():
-    global location
-    print(Dialogue.dialogueLibrary("menu"))
+    print("Choose Option:")
+    choice = input()
+    if choice == "1" and location == "Training Grounds":
+        print("Library")
+    elif choice == "1" and location == "Barracks":
+        print("Armory")
+    elif choice == "1" and location == "Mission":
+        print("Next Mission")
+    elif choice == "2" and location == "Training Grounds":
+        print("Arena")
+    elif choice == "2" and location == "Barracks":
+        LocationFunctions.chooseLocation(player)
+    elif choice == "2" and location == "Mission":
+        LocationFunctions.chooseLocation(player)
+    elif choice == "3" and location == "Training Grounds":
+        Location.Functions.chooseLocation(player)
+    else:
+        print("Functionality not yet coded")
+
+def chooseLocation(player): 
+    print(GameLibraries.dialogueLibrary("menu"))
     choice = input()
     if choice == "1":
-        location = Dialogue.locationLibrary("1")
+        player.setLocation(GameLibraries.locationLibrary("1"))
     elif choice == "2":
-        location = Dialogue.locationLibrary("2")
+        player.setLocation(GameLibraries.locationLibrary("2"))
     elif choice == "3":
-        location = Dialogue.locationLibrary("3")
+        player.setLocation(GameLibraries.locationLibrary("3"))
     else:
         print("Invalid choice")
         choice = ""
-    print(Dialogue.dialogueLibrary("currentlocation") + location + "\n")
+    print(GameLibraries.dialogueLibrary("currentlocation") + player.getLocation() + "\n")

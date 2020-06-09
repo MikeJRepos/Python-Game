@@ -13,6 +13,7 @@ class Character:
         self.W1 = ""
         self.W2 = ""
         self.armor = ""
+        self.location = "Barracks"
 
     #Functions to get and set attributes
     def getName(self):
@@ -48,8 +49,11 @@ class Character:
     def getWeapon2(self):
         return self.W2
 
-    def getArmor(self, arm):
+    def getArmor(self):
         return self.armor
+
+    def getLocation(self):
+        return self.location
         
     def setName(self, NAME):
         self.characterName = NAME
@@ -84,6 +88,9 @@ class Character:
     def setArmor(self, arm):
         self.armor = arm
 
+    def setLocation(self, loc):
+        self.location = loc
+
     def save(self):
         f = open("player", "w")
         f.write(self.characterName + "\n")
@@ -97,5 +104,6 @@ class Character:
         f.write(self.W1 + "\n")
         f.write(self.W2 + "\n")
         f.write(self.armor + "\n")
+        f.write(self.location)
         f.close()
         
