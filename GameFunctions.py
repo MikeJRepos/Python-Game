@@ -191,16 +191,16 @@ def menu(player):
         for x in GameLibraries.dialogueLibrary("Mission"):
             print(x + "\n")
 
-    print("Choose Option:")
+    print("Choose Option: ")
     choice = input()
     if choice == "1" and location == "Training Grounds":
-        print("Library")
+        LocationFunctions.library(player)
     elif choice == "1" and location == "Barracks":
         print("Armory")
     elif choice == "1" and location == "Mission":
         print("Next Mission")
     elif choice == "2" and location == "Training Grounds":
-        print("Arena")
+        LocationFunctions.arena(player)
     elif choice == "2" and location == "Barracks":
         LocationFunctions.chooseLocation(player)
     elif choice == "2" and location == "Mission":
@@ -209,17 +209,3 @@ def menu(player):
         Location.Functions.chooseLocation(player)
     else:
         print("Functionality not yet coded")
-
-def chooseLocation(player): 
-    print(GameLibraries.dialogueLibrary("menu"))
-    choice = input()
-    if choice == "1":
-        player.setLocation(GameLibraries.locationLibrary("1"))
-    elif choice == "2":
-        player.setLocation(GameLibraries.locationLibrary("2"))
-    elif choice == "3":
-        player.setLocation(GameLibraries.locationLibrary("3"))
-    else:
-        print("Invalid choice")
-        choice = ""
-    print(GameLibraries.dialogueLibrary("currentlocation") + player.getLocation() + "\n")
